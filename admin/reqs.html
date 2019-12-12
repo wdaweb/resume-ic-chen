@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理求職條件</title>
+<style>
+.card {
+    width: 30em;
+    box-sizing: border-box;
+}
+.alert {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+</style>
+</head>
+<body>
+<!-- 提示 -->
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>提示：</strong>變更顯示狀態或修改資料後，必須按一下「更新」才會生效！
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- 顯示及新增資料 -->
+<div class="data flex-wrap d-flex justify-content-start">
+    <div class="w-100 row justify-content-center">
+        <input type='button' value='新增求職條件' class='btn m-3 btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>
+    </div>
+    <!-- 顯示及更新 -->
+</div>
+
+<!-- 新增資料的 Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">新增求職條件</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="./api/add_reqs.php" method="post">
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="inputReqs_posit">期望職務</label>
+                    <input type="text" name="reqs_posit" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="inputReqs_jd">工作描述</label>
+                    <textarea class="form-control" name="reqs_jd" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12" id="reqs_time1">
+                    <label for="inputReqs_time1">可上班時間</label>
+                    <select id="inputReqs_time1" name="reqs_time1" class="form-control">
+                        <option selected>隨時</option>
+                        <option>錄取後一週內</option>
+                        <option>錄取後兩週內</option>
+                        <option>錄取後三週內</option>
+                        <option>錄取後一個月內</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12" id="reqs_time2" style="display:none;">
+                    <label for="inputReqs_time2">請輸入可上班時間</label>
+                    <input type="text" name="reqs_time2" id="inputReqs_time2" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="inputReqs_place">期望工作地點</label>
+                    <input type="text" name="reqs_place" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputReqs_type">期望工作性質</label>
+                    <select id="inputReqs_type" name="reqs_type" class="form-control">
+                        <option selected>全職</option>
+                        <option>兼職</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputReqs_pay">期望薪資</label>
+                    <input type="text" name="reqs_pay" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <input type="submit" class="btn btn-primary" value="新增">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function(){
+
+// 選擇「其他」時顯示輸入欄位
+$('#inputReqs_time1').on('change',function(){
+    if($('#inputReqs_time1').val()=='其他') {
+        $('#reqs_time2').show()
+        $('#reqs_time1').hide()
+    } else {
+        $('#reqs_time1').show()
+        $('#reqs_time2').hide()
+    }
+    // 判斷離開輸入欄位時是否有輸入，並隱藏選項
+    $('#inputReqs_time2').on('blur',function(){
+    if($('#inputReqs_time2').val()==''){
+        $('#reqs_time2').hide()
+        $('#reqs_time1').show()
+        $('#inputReqs_time1').val('隨時')
+    }
+    })
+})
+    
+// 取得資料
+    $.get('./api/query_reqs.php',{},function(echo){
+    $('.data').append(echo)
+    
+    // 選擇「其他」時顯示輸入欄位
+    $('select.inputReqs_t1').on('change',function(){
+        let id1=$(this).parent().attr('id')
+        let id1_id=$(this).attr('id')
+        let id2=$(this).parent().next().attr('id')
+        let id2_id=$(this).parent().next().find('input').attr('id')
+        if($(`#${id1_id}`).val()=='其他') {
+            $(`#${id2}`).show()
+            $(`#${id1}`).hide()
+        } else {
+            $(`#${id1}`).show()
+            $(`#${id2}`).hide()
+        }
+        // 判斷離開輸入欄位時是否有輸入，並隱藏選項
+        $(`#${id2_id}`).on('blur',function(){
+        if($(`#${id2_id}`).val()==''){
+            $(`#${id2}`).hide()
+            $(`#${id1}`).show()
+            $(`#${id1_id}`).val('隨時')
+        }
+        })
+    })
+
+    // 更新資料
+    $('input.upt-btn').on('click',function(){
+        let dom=$(this).parent().children().children()
+        let upt_chked=dom.find('input').eq(0).prop('checked')
+        let upt_reqs_posit=dom.find('input').eq(1).val()
+        let upt_reqs_jd=dom.find('textarea').eq(0).val()
+        let upt_reqs_time1=dom.find('select').eq(0).val()
+        let upt_reqs_time2=dom.find('input').eq(2).val()
+        let upt_reqs_time=(upt_reqs_time1=='其他')?`${upt_reqs_time2}`:`${upt_reqs_time1}`
+        let upt_reqs_place=dom.find('input').eq(3).val()
+        let upt_reqs_type=dom.find('select').eq(1).val()
+        let upt_reqs_pay=dom.find('input').eq(4).val()
+        let upt_id=$(this).attr('id')
+        // console.log(dom.find('select'))
+        $.post('./api/update_reqs.php',{
+            upt_chked,
+            upt_reqs_posit,
+            upt_reqs_jd,
+            upt_reqs_time,
+            upt_reqs_place,
+            upt_reqs_type,
+            upt_reqs_pay,
+            upt_id
+        },function(){
+        })
+    })
+
+        // 刪除資料
+        $('input.del-btn').on('click',function(){
+            let del_id=($(this).prev().attr('id'))
+            let table='reqs'
+            $.post('./api/del.php',{del_id,table},function(){
+            })
+            window.location.replace("./admin.php?p=re")
+        })
+    })
+})
+</script>
+</body>
+</html>

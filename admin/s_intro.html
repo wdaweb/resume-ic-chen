@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理自我介紹</title>
+<style>
+.card {
+    width: 30em;
+    box-sizing: border-box;
+}
+.alert {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+</style>
+</head>
+<body>
+<!-- 提示 -->
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>提示：</strong>變更顯示狀態或修改資料後，必須按一下「更新」才會生效！
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- 顯示及新增資料 -->
+<div class="data flex-wrap d-flex justify-content-start">
+    <div class="w-100 row justify-content-center">
+        <input type='button' value='新增自我介紹' class='btn m-3 btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>
+    </div>
+    <!-- 顯示及更新 -->
+</div>
+
+<!-- 新增資料的 Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">新增自我介紹</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="./api/add_s_intro.php" method="post">
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="s_intro">自我介紹</label>
+                    <textarea class="form-control" name="s_intro" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="bio">自傳</label>
+                    <textarea class="form-control" name="bio" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <input type="submit" class="btn btn-primary" value="新增">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function(){
+
+    // console.log($('.twitter').data('id'))
+    $.get('./api/query_s_intro.php',{},function(echo){
+        $('.data').append(echo)
+
+        // 更新資料
+        $('input.upt-btn').on('click',function(){
+            let dom=$(this).parent().children().children()
+            let upt_chked=dom.find('input').eq(0).prop('checked')
+            let upt_s_intro=dom.find('textarea').eq(0).val()
+            let upt_bio=dom.find('textarea').eq(1).val()
+            let upt_id=$(this).attr('id')
+            // console.log(dom.find('textarea').eq(1).val())
+            $.post('./api/update_s_intro.php',{upt_chked,upt_s_intro,upt_bio,upt_id},function(){
+            })
+        })
+
+        // 刪除資料
+        $('input.del-btn').on('click',function(){
+            let del_id=($(this).prev().attr('id'))
+            let table='s_intro'
+            $.post('./api/del.php',{del_id,table},function(){
+            })
+            window.location.replace("./admin.php?p=si")
+        })
+    })
+})
+</script>
+</body>
+</html>

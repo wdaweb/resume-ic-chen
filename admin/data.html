@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理個人資料</title>
+<style>
+.data {
+    height: 100%;
+}
+.card {
+    width: 40em;
+    height: 32em;
+    box-sizing: border-box;
+}
+.alert {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+</style>
+</head>
+<body>
+<!-- 提示 -->
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>提示：</strong>變更顯示狀態或修改資料後，必須按一下「更新」才會生效！
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+    
+<div class="data d-flex justify-content-center align-items-center">
+<div class="card">
+<div class="card-body text-left">
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="inputAcct">帳號</label>
+        <input type="text" name="acct" id="acct" class="form-control" disabled>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="inputPassword">密碼</label>
+        <input type="text" name="psw" id="psw" class="form-control">
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-5">
+        <label for="inputName">姓名</label>
+        <input type="text" name="name" id="name" class="form-control">
+    </div>
+    <div class="form-group col-md-2">
+        <label for="inputGender">性別</label>
+        <input type="text" name="gender" id="gender" class="form-control">
+    </div>
+    <div class="form-group col-md-5">
+        <label for="inputBtd">生日</label>
+        <input type="date" name="btd" id="btd" class="form-control">
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="inputEmail">電子郵件</label>
+        <input type="email" name="email" id="email" class="form-control">
+    </div>
+    <div class="form-group col-md-3">
+        <label for="inputCell">行動電話</label>
+        <input type="text" name="tel_cell" id="tel_cell" class="form-control">
+    </div>
+    <div class="form-group col-md-3">
+        <label for="inputHome">家中電話</label>
+        <input type="text" name="tel_home" id="tel_home" class="form-control">
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputAddress">居住地區</label>
+    <input type="text" name="addr" id="addr" class="form-control">
+</div>
+<fieldset disabled>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="inputRegTime">註冊時間</label>
+        <input type="text" id="reg_time" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="inputUptTime">更新時間</label>
+        <input type="text" id="upt_time" class="form-control">
+    </div>
+</div>
+</fieldset>
+    <input type="button" value="更新" id="upt_btn" class="btn btn-primary">
+</div>
+</div>
+</div>
+
+<script>
+$(function(){
+
+    // 取得使用者資料
+    $.get('./api/query_user.php',{},function(jsData){
+        let data=JSON.parse(jsData)
+        // console.log(data)
+
+        // 填入資料
+        $('#acct').val(data.acct)
+        $('#psw').val(data.psw)
+        $('#name').val(data.name)
+        $('#gender').val(data.gender)
+        $('#btd').val(data.btd)
+        $('#email').val(data.email)
+        $('#tel_cell').val(data.tel_cell)
+        $('#tel_home').val(data.tel_home)
+        $('#addr').val(data.addr)
+        $('#reg_time').val(data.reg_time)
+        $('#upt_time').val(data.upt_time)
+    })
+    // 更新資料
+    $('#upt_btn').on('click',function(){
+        let psw=$('#psw').val()
+        let name=$('#name').val()
+        let gender=$('#gender').val()
+        let btd=$('#btd').val()
+        let email=$('#email').val()
+        let tel_cell=$('#tel_cell').val()
+        let tel_home=$('#tel_home').val()
+        let addr=$('#addr').val()
+        $.post('./api/update_user.php',{psw, name, gender, btd, email, tel_cell, tel_home, addr},function(){
+        })
+    })
+})
+</script>
+</body>
+</html>

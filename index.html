@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首頁</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="./js/popper.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<style>
+.container {
+    height: 100vh;
+}
+.card {
+    width: 20em;
+    box-sizing: border-box;
+}
+</style>
+</head>
+<body class="bg-light">
+<!-- 吐司提示 -->
+<div class="position-absolute w-100 d-flex flex-column p-4">
+    <div class="toast ml-auto" role="alert" data-delay="700" data-autohide="false">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">歡迎使用</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="toast-body">這是線上履歷系統，請在下方登入或註冊！</div>
+    </div>
+</div>
+
+<!-- 登入區域 -->
+<form action="./api/login.php" method="post">
+    <div class="container d-flex align-items-center">
+    <div class="row justify-content-center">
+        <div class="col-12 mb-5">
+        <img src="./img/youthome.regular.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col-12">
+        <div class="card mx-auto">
+            <div class="card-body text-center">
+                <br>
+                <p>帳號：<input type="text" name="acct" id="acct"></p>
+                <p>密碼：<input type="text" name="psw" id="psw"></p>
+                <input type="submit" value="登入">
+                <input type="reset" value="清除">
+                <br>
+                <br>
+                <a href="./reg.html">註冊</a>
+                <!-- <a href="#">忘記密碼</a> -->
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<script>
+$(function(){
+$('.toast').toast('show')
+})
+</script>
+</body>
+</html>
