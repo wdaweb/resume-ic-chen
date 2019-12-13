@@ -110,6 +110,7 @@ $(function(){
             let upt_id=$(this).attr('id')
             // console.log($(this).attr('id'))
             $.post('./api/update_social_m.php',{upt_chked, upt_fb, upt_ig, upt_linkedin, upt_github, upt_youtube, upt_twitter, upt_id},function(){
+                window.location.replace("./admin.php?p=sm")
             })
         })
 

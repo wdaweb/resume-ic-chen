@@ -104,6 +104,7 @@ $(function(){
             let upt_id=$(this).attr('id')
             // console.log(skill)
             $.post('./api/update_skill.php',{upt_chked,cat,skill,level,upt_id},function(){
+                window.location.replace("./admin.php?p=sk")
             })
         })
 

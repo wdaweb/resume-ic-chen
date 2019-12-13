@@ -82,6 +82,7 @@ $(function(){
             let upt_id=$(this).attr('id')
             // console.log(dom.find('textarea').eq(1).val())
             $.post('./api/update_s_intro.php',{upt_chked,upt_s_intro,upt_bio,upt_id},function(){
+                window.location.replace("./admin.php?p=si")
             })
         })
 

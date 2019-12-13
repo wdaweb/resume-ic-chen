@@ -104,6 +104,7 @@ $(function(){
             let upt_id=$(this).attr('id')
             // console.log(upt_chked)
             $.post('./api/update_edu.php',{upt_chked,upt_grad_t,upt_sch,upt_dept,upt_grad_st,upt_id},function(){
+                window.location.replace("./admin.php?p=ed")
             })
         })
 

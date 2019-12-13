@@ -99,6 +99,7 @@ $(function(){
             let upt_id=$(this).attr('id')
             // console.log(upt_jd)
             $.post('./api/update_exp.php',{upt_chked,upt_dur,upt_corp,upt_posit,upt_jd,upt_id},function(){
+                window.location.replace("./admin.php?p=ex")
             })
         })
 

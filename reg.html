@@ -14,6 +14,10 @@
     width: 45em;
     box-sizing: border-box;
 }
+.home-btn {
+    position: relative;
+    right: 0;
+}
 </style>
 </head>
 <body class="bg-light">
@@ -24,17 +28,18 @@
 <div class="card-body text-left">
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="inputAcct">帳號</label>
-            <input type="text" name="acct" id="acct" class="form-control" placeholder="請輸入英數字元，勿超過20個字元">
+            <label for="inputAcct">帳號 <small class="text-danger">*必填</small></label>
+            <input type="text" name="acct" id="acct" aria-describedby="acctHelp" class="form-control" placeholder="請輸入英數字元，勿超過20個字元">
+            <small id="acctHelp" class="form-text text-primary">帳號設定後即無法修改！</small>
         </div>
         <div class="form-group col-md-6">
-            <label for="inputPassword">密碼</label>
-            <input type="text" name="psw" id="psw" class="form-control" placeholder="請輸入英數或符號字元，勿超過20個字元">
+            <label for="inputPassword">密碼 <small class="text-danger">*必填</small></label>
+            <input type="password" name="psw" id="psw" class="form-control" placeholder="請輸入英數或符號字元，勿超過20個字元">
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="inputName">姓名</label>
+            <label for="inputName">姓名 <small class="text-danger">*必填</small></label>
             <input type="text" name="name" id="name" class="form-control" placeholder="請輸入姓名">
         </div>
         <div class="form-group col-md-6">
@@ -66,8 +71,11 @@
         <label for="inputAddress">居住地區</label>
         <input type="text" name="addr" id="addr" class="form-control" placeholder="請輸入居住地區，例如「台北」">
     </div>
+    <div class="d-flex">
         <button type="submit" class="btn btn-primary">註冊</button>
-        <button type="reset" class="btn btn-primary" id="reset">清除</button>
+        <button type="reset" class="btn btn-primary ml-3 mr-3">清除</button>
+        <a href="./index.html" class="btn btn-outline-primary mr-1">回首頁</a>
+    </div>
 </div>
 </div>
 </div>
