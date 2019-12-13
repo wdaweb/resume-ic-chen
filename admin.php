@@ -137,6 +137,9 @@ if(!empty($_GET['p'])){
     case "im":
 ?>loadpage('img.html')<?php
     break;
+    case "da":
+?>loadpage('data.html')<?php
+    break;
 
     default:
     break;

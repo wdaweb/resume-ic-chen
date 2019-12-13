@@ -123,6 +123,7 @@ $(function(){
         let tel_home=$('#tel_home').val()
         let addr=$('#addr').val()
         $.post('./api/update_user.php',{psw, name, gender, btd, email, tel_cell, tel_home, addr},function(){
+            window.location.replace("./admin.php?p=da")
         })
     })
 })
