@@ -71,7 +71,7 @@ function searchAll($table,...$arg){
 
 <?php
 // 找出使用者帳號
-$data=search("user",$_SESSION['id']);
+$data=search("user",1);
 $acct=$data['acct'];
 // 撈出求職條件
 $reqs=searchAll("reqs",["acct"=>"$acct", "see"=>"1"]);
